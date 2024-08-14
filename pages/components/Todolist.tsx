@@ -25,21 +25,6 @@ const Todolist = () => {
         }
     };
 
-    const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'Enter') {
-            if (editIndex > -1) {
-                saveTodo();
-            } else {
-                addTodo();
-            }
-        }
-    };
-
-    const editTodo = (index: number) => {
-        setNewTodo(todos[index].text);
-        setEditIndex(index);
-    };
-
     const saveTodo = () => {
         if (editIndex > -1 && newTodo.trim()) {
             const updatedTodos = [...todos];
@@ -48,6 +33,11 @@ const Todolist = () => {
             setNewTodo('');
             setEditIndex(-1);
         }
+    };
+
+    const editTodo = (index: number) => {
+        setNewTodo(todos[index].text);
+        setEditIndex(index);
     };
 
     const cancelEdit = () => {
@@ -74,6 +64,15 @@ const Todolist = () => {
         setTodos(updatedTodos);
     };
 
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        if (editIndex > -1) {
+            saveTodo();
+        } else {
+            addTodo();
+        }
+    };
+
     const filteredTodos = todos.filter((todo) => {
         if (statusFilter === 'all') return true;
         return todo.status === statusFilter;
@@ -81,31 +80,28 @@ const Todolist = () => {
 
     return (
         <div className="p-4 bg-black text-white w-full">
-            <form onSubmit={(e) => e.preventDefault()}>
-                <div className="flex items-center mb-4">
-                    <input
-                        type="text"
-                        value={newTodo}
-                        onChange={(e) => setNewTodo(e.target.value)}
-                        onKeyPress={handleKeyPress}
-                        placeholder="Enter a new task..."
-                        className="input input-bordered w-full max-w-xs text-black bg-white"
-                    />
-                    {editIndex > -1 ? (
-                        <>
-                            <button onClick={saveTodo} className="btn ml-2">
-                                Save
-                            </button>
-                            <button onClick={cancelEdit} className="btn ml-2 btn-warning">
-                                <FaTimes />
-                            </button>
-                        </>
-                    ) : (
-                        <button onClick={addTodo} className="btn ml-2">
-                            Add
+            <form onSubmit={handleSubmit} className="flex items-center mb-4">
+                <input
+                    type="text"
+                    value={newTodo}
+                    onChange={(e) => setNewTodo(e.target.value)}
+                    placeholder="Enter a new task..."
+                    className="input input-bordered w-full max-w-xs text-black bg-white"
+                />
+                {editIndex > -1 ? (
+                    <>
+                        <button type="submit" className="btn ml-2">
+                            Save
                         </button>
-                    )}
-                </div>
+                        <button type="button" onClick={cancelEdit} className="btn ml-2 btn-warning">
+                            <FaTimes />
+                        </button>
+                    </>
+                ) : (
+                    <button type="submit" className="btn ml-2">
+                        Add
+                    </button>
+                )}
             </form>
 
             <div className="mb-4">
