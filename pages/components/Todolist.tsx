@@ -81,30 +81,32 @@ const Todolist = () => {
 
     return (
         <div className="p-4 bg-black text-white w-full">
-            <div className="flex items-center mb-4">
-                <input
-                    type="text"
-                    value={newTodo}
-                    onChange={(e) => setNewTodo(e.target.value)}
-                    onKeyPress={handleKeyPress}
-                    placeholder="Enter a new task..."
-                    className="input input-bordered w-full max-w-xs text-black bg-white"
-                />
-                {editIndex > -1 ? (
-                    <>
-                        <button onClick={saveTodo} className="btn ml-2">
-                            Save
+            <form onSubmit={(e) => e.preventDefault()}>
+                <div className="flex items-center mb-4">
+                    <input
+                        type="text"
+                        value={newTodo}
+                        onChange={(e) => setNewTodo(e.target.value)}
+                        onKeyPress={handleKeyPress}
+                        placeholder="Enter a new task..."
+                        className="input input-bordered w-full max-w-xs text-black bg-white"
+                    />
+                    {editIndex > -1 ? (
+                        <>
+                            <button onClick={saveTodo} className="btn ml-2">
+                                Save
+                            </button>
+                            <button onClick={cancelEdit} className="btn ml-2 btn-warning">
+                                <FaTimes />
+                            </button>
+                        </>
+                    ) : (
+                        <button onClick={addTodo} className="btn ml-2">
+                            Add
                         </button>
-                        <button onClick={cancelEdit} className="btn ml-2 btn-warning">
-                            <FaTimes />
-                        </button>
-                    </>
-                ) : (
-                    <button onClick={addTodo} className="btn ml-2">
-                        Add
-                    </button>
-                )}
-            </div>
+                    )}
+                </div>
+            </form>
 
             <div className="mb-4">
                 <label className="label text-white">Filter by status:</label>
