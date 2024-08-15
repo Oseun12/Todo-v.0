@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaEdit, FaTrash, FaTimes } from "react-icons/fa";
 
 interface Todo {
@@ -13,6 +13,17 @@ const Todolist = () => {
     const [statusFilter, setStatusFilter] = useState('all');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [todoToDelete, setTodoToDelete] = useState<number | null>(null);
+
+    useEffect(() => {
+        const storedTodos = localStorage.getItem('todos');
+        if (storedTodos) {
+            setTodos(JSON.parse(storedTodos));
+        }
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem('todos', JSON.stringify(todos));
+    }, [todos]);
 
     const addTodo = () => {
         if (newTodo.trim()) {
@@ -188,6 +199,6 @@ const Todolist = () => {
             )}
         </div>
     );
-}
+};
 
 export default Todolist;
