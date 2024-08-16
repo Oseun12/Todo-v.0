@@ -21,17 +21,15 @@ const Todolist = () => {
         }
     }, []);
 
-    useEffect(() => {
-        localStorage.setItem('todos', JSON.stringify(todos));
-    }, [todos]);
-
     const addTodo = () => {
         if (newTodo.trim()) {
             const newTask = {
                 text: newTodo,
                 status: 'pending',
             };
-            setTodos([...todos, newTask]);
+            const updatedTodos = [...todos, newTask];
+            setTodos(updatedTodos);
+            localStorage.setItem('todos', JSON.stringify(updatedTodos));  // Save to localStorage
             setNewTodo('');
         }
     };
@@ -41,6 +39,7 @@ const Todolist = () => {
             const updatedTodos = [...todos];
             updatedTodos[editIndex].text = newTodo;
             setTodos(updatedTodos);
+            localStorage.setItem('todos', JSON.stringify(updatedTodos));  // Save to localStorage
             setNewTodo('');
             setEditIndex(-1);
         }
@@ -63,7 +62,9 @@ const Todolist = () => {
 
     const confirmDeleteTodo = () => {
         if (todoToDelete !== null) {
-            setTodos(todos.filter((_, i) => i !== todoToDelete));
+            const updatedTodos = todos.filter((_, i) => i !== todoToDelete);
+            setTodos(updatedTodos);
+            localStorage.setItem('todos', JSON.stringify(updatedTodos));  // Save to localStorage
             setTodoToDelete(null);
             setIsModalOpen(false);
         }
@@ -73,6 +74,7 @@ const Todolist = () => {
         const updatedTodos = [...todos];
         updatedTodos[index].status = status;
         setTodos(updatedTodos);
+        localStorage.setItem('todos', JSON.stringify(updatedTodos));  // Save to localStorage
     };
 
     const handleSubmit = (e: React.FormEvent) => {
