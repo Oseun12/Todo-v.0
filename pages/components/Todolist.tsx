@@ -14,12 +14,9 @@ const Todolist = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [todoToDelete, setTodoToDelete] = useState<number | null>(null);
 
-    useEffect(() => {
-        const storedTodos = localStorage.getItem('todos');
-        if (storedTodos) {
-            setTodos(JSON.parse(storedTodos));
-        }
-    }, []);
+    const saveToLocalStorage = (todos: Todo[]) => {
+        localStorage.setItem('todos', JSON.stringify(todos));
+    };
 
     const addTodo = () => {
         if (newTodo.trim()) {
@@ -29,7 +26,7 @@ const Todolist = () => {
             };
             const updatedTodos = [...todos, newTask];
             setTodos(updatedTodos);
-            localStorage.setItem('todos', JSON.stringify(updatedTodos));  // Save to localStorage
+            saveToLocalStorage(updatedTodos)
             setNewTodo('');
         }
     };
@@ -39,7 +36,7 @@ const Todolist = () => {
             const updatedTodos = [...todos];
             updatedTodos[editIndex].text = newTodo;
             setTodos(updatedTodos);
-            localStorage.setItem('todos', JSON.stringify(updatedTodos));  // Save to localStorage
+            saveToLocalStorage(updatedTodos)
             setNewTodo('');
             setEditIndex(-1);
         }
@@ -64,7 +61,7 @@ const Todolist = () => {
         if (todoToDelete !== null) {
             const updatedTodos = todos.filter((_, i) => i !== todoToDelete);
             setTodos(updatedTodos);
-            localStorage.setItem('todos', JSON.stringify(updatedTodos));  // Save to localStorage
+            saveToLocalStorage(updatedTodos)
             setTodoToDelete(null);
             setIsModalOpen(false);
         }
@@ -74,7 +71,7 @@ const Todolist = () => {
         const updatedTodos = [...todos];
         updatedTodos[index].status = status;
         setTodos(updatedTodos);
-        localStorage.setItem('todos', JSON.stringify(updatedTodos));  // Save to localStorage
+        saveToLocalStorage(updatedTodos)
     };
 
     const handleSubmit = (e: React.FormEvent) => {
