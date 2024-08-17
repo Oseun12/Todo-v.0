@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaEdit, FaTrash, FaTimes } from "react-icons/fa";
 
 interface Todo {
@@ -14,13 +14,19 @@ const Todolist = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [todoToDelete, setTodoToDelete] = useState<number | null>(null);
 
+    const saveToLocalStorage = (todos: Todo[]) => {
+        localStorage.setItem('todos', JSON.stringify(todos));
+    };
+
     const addTodo = () => {
         if (newTodo.trim()) {
             const newTask = {
                 text: newTodo,
                 status: 'pending',
             };
-            setTodos([...todos, newTask]);
+            const updatedTodos = [...todos, newTask];
+            setTodos(updatedTodos);
+            saveToLocalStorage(updatedTodos)
             setNewTodo('');
         }
     };
@@ -30,6 +36,7 @@ const Todolist = () => {
             const updatedTodos = [...todos];
             updatedTodos[editIndex].text = newTodo;
             setTodos(updatedTodos);
+            saveToLocalStorage(updatedTodos)
             setNewTodo('');
             setEditIndex(-1);
         }
@@ -52,7 +59,9 @@ const Todolist = () => {
 
     const confirmDeleteTodo = () => {
         if (todoToDelete !== null) {
-            setTodos(todos.filter((_, i) => i !== todoToDelete));
+            const updatedTodos = todos.filter((_, i) => i !== todoToDelete);
+            setTodos(updatedTodos);
+            saveToLocalStorage(updatedTodos)
             setTodoToDelete(null);
             setIsModalOpen(false);
         }
@@ -62,6 +71,7 @@ const Todolist = () => {
         const updatedTodos = [...todos];
         updatedTodos[index].status = status;
         setTodos(updatedTodos);
+        saveToLocalStorage(updatedTodos)
     };
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -188,6 +198,6 @@ const Todolist = () => {
             )}
         </div>
     );
-}
+};
 
 export default Todolist;
