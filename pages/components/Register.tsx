@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
@@ -17,7 +17,7 @@ const Register = () => {
             localStorage.setItem('token', response.data);
             router.push('/components/Login');
         } catch (error) {
-            if (error.response && error.response.status === 400) {
+            if (error instanceof AxiosError && error.response && error.response.status === 400) {
                 setShowModal(true);
             } else {
                 console.error('Register failed:', error);
