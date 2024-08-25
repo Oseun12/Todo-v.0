@@ -23,6 +23,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         res.status(201).json(newUser)
     } else {
+        res.setHeader('Allow', ['POST']);
         res.status(405).json({ message: 'Unable to create User' })
     }
 }

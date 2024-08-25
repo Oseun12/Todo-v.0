@@ -24,6 +24,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const token = sign({ userId: user.id }, process.env.JWT_SECRET as string, { expiresIn: '1h' });
         res.status(200).json({ token });
     } else {
+        res.setHeader('Allow', ['POST']);
         res.status(405).json({ message: 'Method not allowed' });
     }
 }
