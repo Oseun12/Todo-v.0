@@ -13,7 +13,7 @@ const Register = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.post('/api/auth/register', { name, email, password });
+            const response = await axios.post('/api/auth/Register', { name, email, password });
             localStorage.setItem('token', response.data);
             router.push('/components/Login');
         } catch (error) {

@@ -12,7 +12,7 @@ const Login = () => {
         e.preventDefault();
 
         try{
-            const response = await axios.post('/api/auth/login', { email, password });
+            const response = await axios.post('/api/auth/Login', { email, password });
             localStorage.setItem('token', response.data);
             router.push('/components/Todolist')
         } catch (error) {
