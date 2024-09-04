@@ -14,7 +14,7 @@ const Login = () => {
         try{
             const response = await axios.post('/api/auth/Login', { email, password });
             localStorage.setItem('token', response.data);
-            router.push('/components/Todolist')
+            router.push('/Todolist')
         } catch (error) {
             console.error('Register failed:', error);
         }

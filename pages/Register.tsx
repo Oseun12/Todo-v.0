@@ -15,7 +15,7 @@ const Register = () => {
         try {
             const response = await axios.post('/api/auth/Register', { name, email, password }, { headers: { 'Content-Type': 'application/json' } } );
             localStorage.setItem('token', response.data);
-            router.push('/components/Login');
+            router.push('/Login');
         } catch (error) {
             if (error instanceof AxiosError && error.response && error.response.status === 400) {
                 setShowModal(true);

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Inter } from "next/font/google";
-import Todolist from "./components/Todolist";
-import Register from "./components/Register";
+import Todolist from "./Todolist";
+import Register from "./Register";
 
 
 export default function Home() {
