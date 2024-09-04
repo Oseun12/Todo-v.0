@@ -13,7 +13,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             // Check if the user exists
             const user = await prisma.user.findUnique({ where: { email } });
             if (!user) {
-                return res.status(401).json({ message: 'We don\'t have your details registered. Please, register.' });
+                return res.status(401).json({ message: 'We dont have your details registered. Please, register.' });
             }
 
             // Compare the provided password with the hashed password
