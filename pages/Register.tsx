@@ -1,5 +1,5 @@
 import axios, { AxiosError } from 'axios';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 const Register = () => {
@@ -14,8 +14,8 @@ const Register = () => {
 
         try {
             const response = await axios.post('/api/auth/Register', { name, email, password }, { headers: { 'Content-Type': 'application/json' } } );
-            localStorage.setItem('token', response.data);
-            router.push('/Login');
+            localStorage.setItem('token', response.data.token);
+            router.replace('/Login');
         } catch (error) {
             if (error instanceof AxiosError && error.response && error.response.status === 400) {
                 setShowModal(true);
@@ -72,7 +72,7 @@ const Register = () => {
                                 placeholder="password"
                                 className="input input-bordered" required />
                             <label className="label">
-                                <a href="components/Login" className="label-text-alt link link-hover">Already have an account?, Login here.</a>
+                                <a href="/Login" className="label-text-alt link link-hover">Already have an account?, Login here.</a>
                             </label>
                         </div>
                         <div className="form-control mt-6">

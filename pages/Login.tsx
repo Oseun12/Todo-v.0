@@ -1,23 +1,30 @@
-import axios from 'axios';
-import router, { useRouter } from 'next/router';
+import axios, { AxiosError } from 'axios';
+import router from 'next/router';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 
 const Login = () => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        try{
-            const response = await axios.post('/api/auth/Login', { email, password });
-            localStorage.setItem('token', response.data);
-            router.push('/Todolist')
-        } catch (error) {
-            console.error('Register failed:', error);
-        }
+        try {
+          const response = await axios.post('/api/auth/Login', { email, password });
+          localStorage.setItem('token', response.data.token);
+          router.push('/Todolist');
+      } catch (error) {
+          if (error instanceof AxiosError && error.response && error.response.status === 401) {
+              alert('Invalid email or password');
+          } else {
+              console.error('Login failed:', error);
+          }
+      }
+      
     }
 
 
