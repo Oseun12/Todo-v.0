@@ -1,6 +1,8 @@
 import axios, { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import Link from 'next/link';
+
 
 const Register = () => {
     const [name, setName] = useState('');
@@ -72,7 +74,7 @@ const Register = () => {
                                 placeholder="password"
                                 className="input input-bordered" required />
                             <label className="label">
-                                <a href="/Login" className="label-text-alt link link-hover">Already have an account?, Login here.</a>
+                                <Link href="/Login" className="label-text-alt link link-hover">Already have an account?, Login here.</Link>
                             </label>
                         </div>
                         <div className="form-control mt-6">

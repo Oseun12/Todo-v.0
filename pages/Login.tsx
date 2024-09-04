@@ -1,7 +1,8 @@
 import axios, { AxiosError } from 'axios';
-import router from 'next/router';
+// import router from 'next/router';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 
 const Login = () => {
@@ -62,7 +63,7 @@ const Login = () => {
             placeholder="password" 
             className="input input-bordered" required />
           <label className="label">
-            <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
+            <Link href="#" className="label-text-alt link link-hover">Forgot password?</Link>
           </label>
         </div>
         <div className="form-control mt-6">
